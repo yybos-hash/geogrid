@@ -1,0 +1,8 @@
+{
+    "name": "plusm/geogrid",
+    "description": "Geogrid test",
+    "type": "project",
+    "require": {
+        "nikic/fast-route": "^1.3"
+    }
+}
