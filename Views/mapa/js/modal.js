@@ -56,6 +56,10 @@ function criaItemModal (item) {
     // Create modal item description
     const modalItemDescricao = document.createElement("div");
     modalItemDescricao.className = "modal-item-descricao";
+    modalItemDescricao.addEventListener("click", () => {
+        centralizarMapa(Number(item.item_lat), Number(item.item_lng));
+        removerBackground();
+    });
 
     const itemImg = document.createElement("img");
     itemImg.src = "Views/mapa/img/icone-item.png";

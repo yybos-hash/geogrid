@@ -5,7 +5,7 @@ async function pegarItens () {
     return await fetch("itens/pegar")
     .then(response => response.json())
     .then(data => {
-        return data.status === statusSuccess ? data.itens : null;
+        return data.status === statusSuccess ? data.itens : [];
     })
     .catch(err => {
         console.log(err);

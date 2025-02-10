@@ -9,9 +9,9 @@
 
     gap: 0.5rem;
 
-    width: 40rem;
+    width: 37rem;
     height: auto;
-    min-height: 16rem;
+    min-height: 10rem;
     max-height: 17rem;
 
     background-color: rgb(182, 182, 182);
@@ -102,8 +102,17 @@
 
     flex: row;
 
-    width: 60%;
+    width: 70%;
     height: 100%;
+
+    border-radius: 0.5rem;
+ 
+    transition: 200ms;
+}
+.modal-item-descricao:hover {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.3);
+    transition: 200ms;
 }
 .modal-item-descricao img {
     aspect-ratio: 1/1;
@@ -132,8 +141,12 @@
 }
 
 .modal-acoes {
+    display: flex;
+
     height: 100%;
     flex: 1;
+
+    gap: 0.25rem;
 }
 .modal-acoes img {
     width: auto;

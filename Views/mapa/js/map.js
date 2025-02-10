@@ -73,5 +73,5 @@ function centralizarMapa (lat, lng) {
     if (map === null) { return; }
     
     map.panTo({ lat: lat, lng: lng });
-    map.setZoom(16);
+    map.setZoom(19);
 }
