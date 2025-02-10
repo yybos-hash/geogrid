@@ -5,7 +5,7 @@
 
 p, button, input {
     font-family: Arial, Helvetica, sans-serif;
-    color: rgb(255, 255, 255);
+    color: rgb(244, 244, 244);
 
     font-weight: 500;
     font-size: 13pt;
@@ -55,7 +55,8 @@ input {
     transition: 200ms;
 }
 input:focus {
-    border-color: rgb(75, 75, 75);
+    border-color: rgb(133, 133, 133);
+    transition: 200ms;
 }
 
 .flex {
@@ -79,7 +80,7 @@ input:focus {
     justify-content: center;
     align-items: flex-start;
 
-    flex-direction: row;
+    flex-direction: column;
 
     width: 100vw;
     height: 100svh;

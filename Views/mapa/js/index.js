@@ -53,11 +53,28 @@ function criarBackground () {
     background.id = "background";
 
     document.body.appendChild(background);
+    
+    // animacao opacidade
+    anime({
+        targets: background,
+        opacity: [0, 1],
+        duration: 100,
+        easing: "easeInOutQuad"
+    });
 
     return background;
 }
 function removerBackground () {
-    document.body.removeChild(background);
+    // animacao opacidade
+    anime({
+        targets: background,
+        opacity: [1, 0],
+        duration: 100,
+        easing: "easeInOutQuad",
+        complete: function () {
+            document.body.removeChild(background);
+        }
+    });
 }
 
 const buttonConsultar = document.getElementById("button-consultar");
