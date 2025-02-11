@@ -1,15 +1,17 @@
+let modal = null;
+
 async function abrirModalItens (titulo) {
     // Create div container
-    const div = document.createElement("div");
-    div.style.className = "flex center vertical";
+    modal = document.createElement("div");
+    modal.style.className = "flex center vertical";
 
     // Create modal navigation
     const modalNav = document.createElement("div");
     modalNav.id = "modal-nav";
 
     // Create modal container
-    const modal = document.createElement("div");
-    modal.id = "modal";
+    const modalDiv = document.createElement("div");
+    modalDiv.id = "modal";
 
     const navText = document.createElement("p");
     navText.textContent = titulo;
@@ -30,21 +32,21 @@ async function abrirModalItens (titulo) {
     let itens = await pegarItens();
     itens.forEach(item => {
         let modalItem = criaItemModal(item);
-        modal.appendChild(modalItem);
+        modalDiv.appendChild(modalItem);
     });
 
-    div.appendChild(modalNav);
-    div.appendChild(modal);
+    modal.appendChild(modalNav);
+    modal.appendChild(modalDiv);
 
     // Create modal background
     let background = criarBackground();
 
-    // Append div to background
-    background.appendChild(div);
+    // Append modal to background
+    background.appendChild(modal);
 
     // Add event listener to close the modal
     modalNavClose.addEventListener("click", () => {
-        removerBackground();
+        fecharModalItens();
     });
 }
 
@@ -58,7 +60,7 @@ function criaItemModal (item) {
     modalItemDescricao.className = "modal-item-descricao";
     modalItemDescricao.addEventListener("click", () => {
         centralizarMapa(Number(item.item_lat), Number(item.item_lng));
-        removerBackground();
+        fecharModalItens();
     });
 
     const itemImg = document.createElement("img");
@@ -83,7 +85,7 @@ function criaItemModal (item) {
     ampliarImg.src = "Views/mapa/img/icone-ampliar.png";
     ampliarImg.addEventListener("click", () => {
         centralizarMapa(Number(item.item_lat), Number(item.item_lng));
-        removerBackground();
+        fecharModalItens();
     });
 
     const deletarImg = document.createElement("img");
@@ -92,13 +94,59 @@ function criaItemModal (item) {
         let markerItem = markers.find(marker => marker.item_id == item.item_id);
 
         if (markerItem !== null && markerItem !== undefined) {  
-            deletaItem(markerItem); // remove o marker depois da confirmacao do servidor
-            removerBackground();
+            minimizarModalItens(() => {                
+                    let botao1 = {
+                        texto: "Sim",
+                        funcao: function () {
+                            deletaItem(markerItem); // remove o marker depois da confirmacao do servidor
+                            fecharModalItens();
+                        }
+                    };
+
+                    let botao2 = {
+                        texto: "Não",
+                        funcao: function () {
+                            minimizarMensagem(() => {
+                                maximizarModalItens();
+                            });
+                        }
+                    };
+
+                    criarMensagem("Deletar Item?", botao1, botao2);
+            });
+        }
+    });
+
+    const editarImg = document.createElement("img");
+    editarImg.src = "Views/mapa/img/icone-editar.png";
+    editarImg.addEventListener("click", () => {
+        let markerItem = markers.find(marker => marker.item_id == item.item_id);
+
+        if (markerItem !== null && markerItem !== undefined) {
+            // animacao minimizar modal itens
+            minimizarModalItens(() => {
+                let botao = {
+                    texto: "Editar",
+                    funcao: function (input) {
+                        // callback do botao
+                        markerItem.item_descricao = input;
+                        editaItem(markerItem);
+                    }
+                };
+                let input = {
+                    valor: markerItem.item_descricao,
+                    placeholder: "Descrição..."
+                };
+
+                // cria formulario depois que foi minimizado
+                criarFormulario("Editar Item", botao, input);
+            });       
         }
     });
 
     modalAcoes.appendChild(ampliarImg);
     modalAcoes.appendChild(deletarImg);
+    modalAcoes.appendChild(editarImg);
 
     // Append everything to modal item
     modalItem.appendChild(modalItemDescricao);
@@ -106,4 +154,31 @@ function criaItemModal (item) {
     modalItem.appendChild(modalAcoes);
 
     return modalItem;
+}
+
+function fecharModalItens () {
+    modal = null;
+    removerBackground();
+}
+
+function minimizarModalItens (callbackComplete) {
+    anime({
+        targets: modal,
+        opacity: [1, 0],
+        duration: 200,
+        complete: function () {
+            modal.style.display = "none";
+            callbackComplete();
+        }
+    });
+}
+function maximizarModalItens () {
+    anime({
+        targets: modal,
+        opacity: [0, 1],
+        duration: 200,
+        begin: function () {
+            modal.style.display = "block";
+        }
+    });
 }

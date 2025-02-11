@@ -12,6 +12,7 @@ include "apiKey.php";
         <link rel="stylesheet" href="Views/mapa/css/modal.css">
         <link rel="stylesheet" href="Views/mapa/css/info-holder.css">
         <link rel="stylesheet" href="Views/mapa/css/formulario.css">
+        <link rel="stylesheet" href="Views/mapa/css/mensagem.css">
         
         <script src="Views/libs/anime.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $apiKey; ?>&callback=initMap&v=weekly&libraries=marker&loading=async" async defer></script>
@@ -31,6 +32,7 @@ include "apiKey.php";
 
         <script src="Views/mapa/js/map.js"></script>
         <script src="Views/mapa/js/index.js"></script>
+        <script src="Views/mapa/js/mensagem.js"></script>
         <script src="Views/mapa/js/modal.js"></script>
         <script src="Views/mapa/js/formulario.js"></script>
     </body>

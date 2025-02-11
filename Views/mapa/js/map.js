@@ -1,5 +1,5 @@
 let map = null;
-let markers; // uma array com todos os markers e seus itens
+let markers = []; // uma array com todos os markers e seus itens
 
 async function initMap () {
     map = new google.maps.Map(document.getElementById("google-map"), {
@@ -20,17 +20,26 @@ async function initMap () {
 
     // evento click no mapa
     map.addListener("click", (event) => {
-        criarFormulario((descricao) => {
-            // callback para o evento click do botao
-            // envia o item pro servidor e só adiciona no mapa depois que o servidor devolver o item com o id gerado
-            let item = {
-                "item_lat": event.latLng.lat(),
-                "item_lng": event.latLng.lng(),
-                "item_descricao": descricao
-            };
+        let botao = {
+            texto: "Criar",
+            funcao: function (input) {
+                // callback para o evento click do botao
+                // envia o item pro servidor e só adiciona no mapa depois que o servidor devolver o item com o id gerado
+                let item = {
+                    "item_lat": event.latLng.lat(),
+                    "item_lng": event.latLng.lng(),
+                    "item_descricao": input
+                };
 
-            enviaItem(item);
-        });
+                enviaItem(item);
+            }
+        };
+        let input = {
+            valor: "",
+            placeholder: "Descrição..."
+        };
+
+        criarFormulario("Criar Item", botao, input);
     });
 
     markers = [];
@@ -67,6 +76,17 @@ function criarMarker (item) {
 function removerMarker (marker) {
     marker.setMap(null);
     markers = markers.filter(markerItem => markerItem.marker !== marker);
+}
+function atualizarMarker (markerItem) {
+    let imgMarker = document.createElement("img");
+    imgMarker.src = "Views/mapa/img/icone-item.png";
+    
+    markerItem.marker = new google.maps.marker.AdvancedMarkerElement({
+        position: { lat: Number(markerItem.item_lat), lng: Number(markerItem.item_lng) },
+        map: map,
+        content: imgMarker,
+        title: markerItem.item_descricao
+    });
 }
 
 function centralizarMapa (lat, lng) {

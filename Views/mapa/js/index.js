@@ -47,8 +47,30 @@ async function deletaItem (markerItem) {
     })
     .catch(error => console.error("Error:", error));
 }
+async function editaItem (markerItem) {
+    await fetch("itens/editar", {
+        method: "POST", // HTTP method
+        headers: {
+            "Content-Type": "application/json", // Sending JSON data
+        },
+        body: JSON.stringify({
+            item_id: markerItem.item_id,
+            item_descricao: markerItem.item_descricao
+        })
+    })
+    .then(response => response.json()) // Convert response to JSON
+    .then(data => {
+        console.log(data);
+        atualizarMarker(markerItem);
+    })
+    .catch(error => console.error("Error:", error));    
+}
 
 function criarBackground () {
+    if (background !== null) {
+        return background;
+    }
+
     background = document.createElement("div");
     background.id = "background";
 
@@ -73,6 +95,7 @@ function removerBackground () {
         easing: "easeInOutQuad",
         complete: function () {
             document.body.removeChild(background);
+            background = null;
         }
     });
 }

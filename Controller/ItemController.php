@@ -62,5 +62,28 @@ class ItemController extends Controller {
 
         echo json_encode($status);
     }
+
+    public function editItem () {
+        $id = intval($_POST["item_id"]);
+        $descricao = filter_var($_POST["item_descricao"], FILTER_SANITIZE_SPECIAL_CHARS); // prevenir um possivel XSS
+
+        // se qualquer valor for nulo
+        if ($descricao === false || !isset($id)) {
+            echo json_encode($this->STATUS_ERRO);
+            exit();
+        }
+
+        $update = $this->model->editItem($id, $descricao);
+        if (count($update) == 0) {
+            $status = $this->STATUS_ERRO;
+            $status["menssagem"] = "ID incorreto";
+        }
+        else {
+            $status = $this->STATUS_SUCESSO;
+            $status["item"] = $update;
+        }
+
+        echo json_encode($status);
+    }
 }
 ?>

@@ -1,4 +1,4 @@
-function criarFormulario (botaoCallback) {
+function criarFormulario (titulo, botao, entrada) {
     // Create div container
     const div = document.createElement("div");
     div.style.className = "flex center vertical";
@@ -12,7 +12,7 @@ function criarFormulario (botaoCallback) {
     formularioNav.id = "formulario-nav";
 
     const title = document.createElement("p");
-    title.textContent = "Criar Item";
+    title.textContent = titulo;
 
     const closeButton = document.createElement("div");
     closeButton.id = "formulario-nav-close";
@@ -33,14 +33,15 @@ function criarFormulario (botaoCallback) {
 
     const input = document.createElement("input");
     input.type = "text";
-    input.placeholder = "Descrição...";
+    input.placeholder = entrada.placeholder;
+    input.value = entrada.valor;
 
     const button = document.createElement("button");
-    button.textContent = "Criar";
+    button.textContent = botao.texto;
     button.addEventListener("click", () => {
         if (input.value.trim() === "") { return; }
 
-        botaoCallback(input.value.trim());
+        botao.funcao(input.value.trim());
         removerBackground();
     });
 

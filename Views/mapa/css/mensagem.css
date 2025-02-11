@@ -1,9 +1,9 @@
-#formulario {
+#mensagem {
     display: flex;
     position: relative;
 
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
 
     flex-direction: column;
 
@@ -26,12 +26,16 @@
     overflow-y: scroll;
 
     box-sizing: border-box;
+
+    h1 {
+        color: rgb(51, 51, 51);
+    }
 }
-#formulario::-webkit-scrollbar {
+#mensagem::-webkit-scrollbar {
     display: none;
 }
 
-#formulario-nav {
+#mensagem-nav {
     display: flex;
     position: relative;
 
@@ -50,12 +54,13 @@
     box-sizing: border-box;
 
     background-color: rgb(51, 51, 51);
+
+    p {
+        font-weight: 600;
+        font-size: 13pt;
+    }
 }
-#formulario-nav > p {
-    font-weight: 600;
-    font-size: 13pt;
-}
-#formulario-nav-close {
+#mensagem-nav-close {
     display: flex;
 
     justify-content: center;
@@ -68,21 +73,22 @@
 
     border-radius: 0.4rem;
     transition: 200ms;
+
+    img {
+        width: auto;
+        height: 95%;
+    
+        aspect-ratio: 1/1;
+    }
 }
-#formulario-nav-close:hover {
+#mensagem-nav-close:hover {
     cursor: pointer;
     background-color: rgb(114, 114, 114);
 
     transition: 200ms;
 }
-#formulario-nav-close img {
-    width: auto;
-    height: 95%;
 
-    aspect-ratio: 1/1;
-}
-
-#formulario-info {
+#mensagem-info {
     display: flex;
 
     width: 100%;
@@ -93,5 +99,5 @@
     justify-content: center;
     align-items: center;
 
-    flex-direction: column;
+    flex-direction: row;
 }

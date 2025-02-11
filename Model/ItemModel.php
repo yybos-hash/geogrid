@@ -16,6 +16,11 @@ class ItemModel extends Model {
         return $this->delete("DELETE FROM item WHERE item_id=:id", ["id" => $id]);
     }
 
+    public function editItem (int $id, string $descricao) : array {
+        $this->update("UPDATE item SET item_descricao=:desc WHERE item_id=:id", ["desc"=> $descricao, "id" => $id]);
+        return $this->selectItem($id);
+    }
+
     public function insertItem (string $descricao, float $lat, float $lng) : array | null {
         try {
             // transação pra evitar concorrencia (concurrency) quando pegar o lastInsertId
